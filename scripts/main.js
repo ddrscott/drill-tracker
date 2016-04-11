@@ -15,7 +15,7 @@
           return (this.attempts > 0 ? parseInt(this.makeRate() * 1000)/10.0 + "%" : "?");
         },
         startTime: new Date().getTime(),
-        endTime: undefined, 
+        endTime: undefined,
         time: function() {
           return this.endTime || (new Date().getTime() - this.startTime);
         },
@@ -39,7 +39,7 @@
           panel.find('.drill-stats').text(this.stats());
           panel.find('.drill-time').text(this.time());
           panel.show();
-          return panel; 
+          return panel;
         },
         renderTr: function() {
           return $('<tr class="drill"/>').
