@@ -15,8 +15,9 @@
           return (this.attempts > 0 ? parseInt(this.makeRate() * 1000)/10.0 + "%" : "?");
         },
         startTime: new Date().getTime(),
+        endTime: undefined, 
         time: function() {
-          return new Date().getTime() - this.startTime;
+          return this.endTime || (new Date().getTime() - this.startTime);
         },
         stats: function() {
           return "" + this.makes + " / " + this.attempts + " = " + this.renderRate();
@@ -27,6 +28,9 @@
         },
         onMiss: function() {
           this.attempts += 1;
+        },
+        onFinish: function() {
+          this.endTime = this.time();
         },
         renderPanel: function() {
           var panel = $('#drill-panel-tmpl').clone();
@@ -58,7 +62,10 @@
       this.render();
     },
     startDrill: function(drill) {
-      this.current && this.history.push(this.current);
+      if (this.current) {
+        this.current.onFinish();
+        this.history.push(this.current);
+      }
       this.current = drill;
       this.render();
     },
@@ -67,8 +74,6 @@
           return drill.renderTr();
         }.bind(this));
     },
-    /**
-     */
     render: function() {
       this.current && $('.current').html(this.current.renderPanel());
       $('.history-body').html(this.renderHistory(this.history));
