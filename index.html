@@ -7,6 +7,35 @@
     <script src="lib/jquery.min.js"></script>
   </head>
   <body>
+    <div class="container">
+      <h1>Drill Tracker 2000</h1>
+      <div class="well">
+        <form onsubmit="App.onStartDrill(); return false">
+          <label>Pick a drill</label>
+          <select class="new_type">
+            <option>Free Throws</option>
+            <option>3-points</option>
+          </select>
+          <label>How many "makes"?</label>
+          <input class="new_makes" type="text" value="10"/>
+          <input type="submit" value="Start!" />
+        </form>
+      </div>
+      <h4> Current </h4>
+      <div class="current">
+      </div>
+      <h4> History </h4>
+      <table class="history table table-border">
+        <thead>
+          <th>Name</th>
+          <th>Goal</th>
+          <th>Stats</th>
+          <th>Time</th>
+        </thead>
+        <tbody class="history-body">
+        <tbody>
+      </table>
+    </div>
     <script src="scripts/main.js"></script>
   </body>
 </html>
