@@ -61,7 +61,12 @@ App = {
     };
   },
   onStartDrill: function() {
-    this.startDrill(this.newDrill());
+    if (this.current) {
+      this.current.onFinish();
+      this.history.unshift(this.current);
+    }
+    this.current = this.newDrill();
+    this.render();
   },
   onMake: function() {
     this.current && this.current.onMake();
@@ -69,14 +74,6 @@ App = {
   },
   onMiss: function() {
     this.current && this.current.onMiss();
-    this.render();
-  },
-  startDrill: function(drill) {
-    if (this.current) {
-      this.current.onFinish();
-      this.history.unshift(this.current);
-    }
-    this.current = drill;
     this.render();
   },
   renderHistory: function(drills) {
@@ -87,11 +84,8 @@ App = {
   render: function() {
     if (this.current) {
       $('.current').html(this.current.renderPanel());
-      console.log("!!!!!!!!!!!!!!!  a", this.current.renderPanel());
     }
     $('.history-body').html(this.renderHistory(this.history));
-
-    console.log("!!!!!!!!!!!!!!!  b", this.renderHistory(this.history));
   }
 }
 App.render();
