@@ -6,6 +6,7 @@
       return {
         name: $('select.new_type').val(),
         goal: parseInt($('input.new_makes').val()),
+        index: this.history.length,
         makes: 0,
         attempts: 0,
         makeRate: function() {
@@ -32,21 +33,29 @@
         onFinish: function() {
           this.endTime = this.time();
         },
+        isGoalReached: function() {
+          return this.makes >= this.goal;
+        },
         renderPanel: function() {
           var panel = $('#drill-panel-tmpl').clone();
           panel.find('.drill-name').text(this.name);
           panel.find('.drill-goal').text(this.goal);
           panel.find('.drill-stats').text(this.stats());
           panel.find('.drill-time').text(this.time());
+          if (this.isGoalReached()) {
+            panel.find('.btn-retry').show();
+          } else {
+            panel.find('.btn-retry').hide();
+          }
           panel.show();
           return panel;
         },
         renderTr: function() {
           return $('<tr class="drill"/>').
-            append($('<td class="drill-name"/>').html(this.name)).
-              append($('<td class="drill-goal"/>').html(this.goal)).
-                append($('<td class="drill-stats"/>').html(this.stats())).
-                  append($('<td class="drill-time"/>').html(this.time()));
+            append($('<td class="drill-name"/>').text(this.name)).
+              append($('<td class="drill-goal"/>').text(this.goal)).
+                append($('<td class="drill-stats"/>').text(this.stats())).
+                  append($('<td class="drill-time"/>').text(this.time()));
         }
       };
     },
@@ -64,7 +73,7 @@
     startDrill: function(drill) {
       if (this.current) {
         this.current.onFinish();
-        this.history.push(this.current);
+        this.history.unshift(this.current);
       }
       this.current = drill;
       this.render();

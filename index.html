@@ -26,8 +26,10 @@
         Stats: <span class="drill-stats"></span>
         Time: <span class="drill-time"></span>
         <div class="buttons">
-          <button class="btn btn-xlg btn-primary" onclick="App.onMake()">Make</button>
-          <button class="btn btn-xlg btn-error" onclick="App.onMiss()">Miss</button>
+          <button class="btn btn-xlg btn-primary btn-make" onclick="App.onMake()">Make</button>
+          <button class="btn btn-xlg btn-error   btn-miss" onclick="App.onMiss()">Miss</button>
+          <button class="btn btn-xlg btn-info    btn-retry"
+                  onclick="App.onStartDrill()">Goal Reached, Retry</button>
         </div>
       </div>
       <div class="current">
